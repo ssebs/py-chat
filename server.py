@@ -1,3 +1,4 @@
+import sys
 import socket
 from threading import Thread
 from socketserver import ThreadingMixIn
@@ -41,10 +42,27 @@ class ClientThread(Thread):
                 break
 
 
-TCP_IP = '0.0.0.0'
-TCP_PORT = 6800
-BUFFER_SIZE = 20  # Normally 1024, but we want fast response
+### Code Entry ###
 
+# Check args, if nothing is set, use defaults
+if(len(sys.argv) == 3):
+    TCP_IP = sys.argv[1]
+    TCP_PORT = int(sys.argv[2])
+elif(len(sys.argv) == 2):
+    if ":" in sys.argv[1]:
+        print(sys.argv[1])
+        # slice up and set vars
+        spl = sys.argv[1].split(":")
+        TCP_IP = spl[0]
+        TCP_PORT = int(spl[1])
+    #print(sys.argv[0] + " requires 0 or 2 arguments. Hostname / IP, and port.")
+    #print("Defaults to localhost:6800 if no argument is sent.")
+    #sys.exit(0)
+else:   
+    TCP_IP = '0.0.0.0'
+    TCP_PORT = 6800
+
+BUFFER_SIZE = 20  # Normally 1024, but we want fast response
 tcpSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 tcpSock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 tcpSock.bind((TCP_IP, TCP_PORT))
