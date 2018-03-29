@@ -55,9 +55,6 @@ elif(len(sys.argv) == 2):
         spl = sys.argv[1].split(":")
         TCP_IP = spl[0]
         TCP_PORT = int(spl[1])
-    #print(sys.argv[0] + " requires 0 or 2 arguments. Hostname / IP, and port.")
-    #print("Defaults to localhost:6800 if no argument is sent.")
-    #sys.exit(0)
 else:   
     TCP_IP = '0.0.0.0'
     TCP_PORT = 6800
